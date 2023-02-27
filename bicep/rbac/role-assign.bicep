@@ -3,14 +3,10 @@
 @sys.description('Required. The Principal or Object ID of the Security Principal (User, Group, Service Principal, Managed Identity).')
 param principalId string
 
-// TODO review this param
-@sys.description('Required. Name of the Resource Group to assign the RBAC role to. If not provided, will use the current scope for deployment.')
-param resourceGroupName string
-
 @sys.description('Optional. The description of the role assignment.')
 param description string = ''
 
-@sys.description('Required. Id of the Azure RBAC role')
+@sys.description('Required. Uuid of the Azure RBAC role')
 param roleId string
 
 @sys.description('Optional. The principal type of the assigned principal ID.')
@@ -23,18 +19,18 @@ param roleId string
 ])
 param principalType string = 'Group'
 
-@sys.description('This is the built-in VM user role')
-resource vmUserRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+@sys.description('This is the built-in or custom role to assign')
+resource roleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
   scope: subscription()
-  name: 'fb879df8-f326-4884-b1cf-06f3ad86be52'
+  name: roleId
 }
 
 resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-  name: guid(resourceGroupName, roleId, principalId)
-  scope: resourceGroup()  // TODO add other scopes
+  name: guid(resourceGroup().name, roleDefinition.id, principalId)
+  scope: resourceGroup()
   properties: {
     principalId: principalId
-    roleDefinitionId: vmUserRoleDefinition.id
+    roleDefinitionId: roleDefinition.id
     principalType: principalType
     description: !empty(description) ? description : null
   }
