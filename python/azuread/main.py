@@ -6,6 +6,8 @@ group_mail_nickname = "test-group"
 
 groups = AADGroup()
 
+print(groups.get_group_id("Test Group"))
+
 # Example usage of the create_update_group function
 groups.create_update_group(group_name, group_description, group_mail_nickname)
 

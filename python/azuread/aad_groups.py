@@ -5,6 +5,7 @@ class AADGroup:
     def __init__(self):
         self.url = "https://graph.microsoft.com/v1.0/groups"
 
+
     def create_update_group(self, group_name, group_description, group_mail_nickname):
         """
         Creates or updates a security-enabled Active Directory group with the specified name, description, and mail nickname.
@@ -52,12 +53,13 @@ class AADGroup:
 
                 # Check the status code of the response to ensure the group was created successfully
                 if response.ok:
-                    print("Group created successfully!")
+                    print(f"Group '{group_name}' created successfully.")
                 else:
                     print("Failed to create group. Status code: ", response.status_code)
                     print("Failed to create group. Status code: ", response.content)
         else:
             print(f"Failed to get group '{group_name}'. Status code: {response.status_code}")
+
 
     def delete_group(self, group_name):
         """
@@ -93,3 +95,27 @@ class AADGroup:
                 print(f"No group found with name '{group_name}'.")
         else:
             print(f"Failed to get group '{group_name}'. Status code: {response.status_code}")
+
+
+    def get_group_id(self, group_name):
+            """
+            Gets the id of a security-enabled Active Directory group with the specified name.
+            """
+
+            headers = get_token_header()
+
+            # Check if the group already exists
+            params = {"$filter": f"displayName eq '{group_name}'"}
+            response = requests.get(self.url, headers=headers, params=params)
+
+            if response.ok:
+                results = response.json().get("value")
+
+                if len(results) > 1:
+                    raise ValueError(f"Group {group_name} found {len(results)} times.")
+
+                if len(results) > 0:
+                    return results[0].get("id")
+            
+            print(f"No group found with name '{group_name}'.")
+            
