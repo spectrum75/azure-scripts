@@ -1,0 +1,15 @@
+# Ignore the build output directory
+bin/
+obj/
+
+# Ignore Visual Studio Code workspace settings
+.vscode/
+
+# Ignore user-specific Bicep configuration files
+.bicepconfig.user.json
+
+# Ignore Azure CLI cache directory
+.azure/
+
+# Ignore generated parameter files
+**/parameters/*.json
