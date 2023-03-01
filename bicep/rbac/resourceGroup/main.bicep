@@ -1,5 +1,3 @@
-// only supports resource group currently
-
 @sys.description('Required. The Principal or Object ID of the Security Principal (User, Group, Service Principal, Managed Identity).')
 param principalId string
 
