@@ -1,6 +1,4 @@
-// only supports resource group currently
-
-@sys.description('Required. Array containing he Principal or Object ID of the Security Principal (User, Group, Service Principal, Managed Identity).')
+@sys.description('Required. The Principal or Object ID of the Security Principal (User, Group, Service Principal, Managed Identity).')
 param principalId string
 
 @sys.description('Optional. The description of the role assignment.')
