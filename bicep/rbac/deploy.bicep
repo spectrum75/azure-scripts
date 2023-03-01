@@ -1,5 +1,5 @@
 @sys.description('Required. Array containing the Principal or Object ID of the Security Principal (User, Group, Service Principal, Managed Identity).')
-param principalIds array = []
+param principalIds array
 
 @sys.description('Required. Uuid of the Azure RBAC role')
 param roleId string
