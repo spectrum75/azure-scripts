@@ -1,15 +1,15 @@
 # Bicep Samples
 
-Tos use add custom parameter files to the parameters directory.
+To use add a custom parameter files to a parameters directory.
 
-## Role Assignments
+## Resource Groups
 
-See the [role assignment documentation](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/scenarios-rbac) and the [bicep definition here](https://learn.microsoft.com/en-us/azure/templates/microsoft.authorization/roleassignments?pivots=deployment-language-bicep)
+See the [bicep definition here](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/resourcegroups?pivots=deployment-language-bicep)
 
 ```sh
-az deployment group what-if --resource-group <RG-NAME> --template-file .\role-assign.bicep --parameters .\parameters\role-assign.parameters.json
+az deployment sub what-if --template-file .\deploy.bicep --parameters .\parameters\parameters.json -l <LOCATION>
 ```
 
 ```sh
-az deployment create what-if --resource-group <RG-NAME> --template-file .\role-assign.bicep --parameters .\parameters\role-assign.parameters.json
+az deployment sub create --template-file .\deploy.bicep --parameters .\parameters\parameters.json -l <LOCATION>
 ```
