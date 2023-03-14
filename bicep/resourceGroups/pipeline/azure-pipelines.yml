@@ -12,10 +12,9 @@ pool:
   vmImage: windows-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: PowerShell@2
+  displayName: run what-if
+  inputs:
+    targetType: 'inline'
+    script: |
+       az deployment sub what-if --template-file .\deploy.bicep --parameters .\config\parameters.json -l australiaeast
