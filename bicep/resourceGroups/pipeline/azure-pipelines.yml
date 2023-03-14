@@ -40,8 +40,7 @@ steps:
     script: |
       cd ./bicep/resourceGroups/
       az deployment sub what-if --template-file .\deploy.bicep --parameters .\config\parameters.json -l australiaeast
-- task: ManualIntervention@8
-  displayName: Approve deployment
+- task: ManualValidation@0
   inputs:
+    notifyUsers: 'eoghan.kenny@outlook.com'
     instructions: 'Check PSRule and What-If output'
-    emailRecipients: 'eoghan.kenny@outlook.com'
