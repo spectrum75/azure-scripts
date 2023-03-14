@@ -15,6 +15,18 @@ variables:
 - group: resource-group-variables
 
 steps:
+- task: ps-rule-install@2
+  inputs:
+    module: 'PSRule.Rules.Azure'
+    latest: false
+    prerelease: false
+- task: ps-rule-assert@2
+  inputs:
+    inputType: 'inputPath'
+    inputPath: './bicep/resourceGroups/deploy.bicep'
+    modules: 'PSRule.Rules.Azure'
+    outputFormat: 'Sarif'
+    outputPath: 'psrule-results'
 - task: PowerShell@2
   displayName: login to azure
   inputs:
@@ -28,15 +40,8 @@ steps:
     script: |
       cd ./bicep/resourceGroups/
       az deployment sub what-if --template-file .\deploy.bicep --parameters .\config\parameters.json -l australiaeast
-- task: ps-rule-install@2
+- task: ManualIntervention@8
+  displayName: Approve deployment
   inputs:
-    module: 'PSRule.Rules.Azure'
-    latest: false
-    prerelease: false
-- task: ps-rule-assert@2
-  inputs:
-    inputType: 'inputPath'
-    inputPath: './bicep/resourceGroups/deploy.bicep'
-    modules: 'PSRule.Rules.Azure'
-    outputFormat: 'Sarif'
-    outputPath: 'psrule-results'
+    instructions: 'Check PSRule and What-If output'
+    emailRecipients: 'eoghan.kenny@outlook.com'
