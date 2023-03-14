@@ -11,9 +11,18 @@ trigger:
 pool:
   vmImage: windows-latest
 
+variables:
+- group: resource-group-variables
+
 steps:
 - task: PowerShell@2
-  displayName: run what-if
+  displayName: login to azure
+  inputs:
+    targetType: 'inline'
+    script: |
+      az login --service-principal --username $(client_id) --password $(client_secret) --tenant $(tenant_id)
+- task: PowerShell@2
+  displayName: run bicep what-if
   inputs:
     targetType: 'inline'
     script: |
