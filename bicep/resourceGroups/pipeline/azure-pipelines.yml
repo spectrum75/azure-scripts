@@ -36,7 +36,7 @@ steps:
 - task: ps-rule-assert@2
   inputs:
     inputType: 'inputPath'
-    inputPath: '.deploy.bicep'
+    inputPath: './bicep/resourceGroups/deploy.bicep'
     modules: 'PSRule.Rules.Azure'
     outputFormat: 'Sarif'
     outputPath: 'psrule-results'
