@@ -28,3 +28,15 @@ steps:
     script: |
       cd ./bicep/resourceGroups/
       az deployment sub what-if --template-file .\deploy.bicep --parameters .\config\parameters.json -l australiaeast
+- task: ps-rule-install@2
+  inputs:
+    module: 'PSRule.Rules.Azure'
+    latest: false
+    prerelease: false
+- task: ps-rule-assert@2
+  inputs:
+    inputType: 'inputPath'
+    inputPath: '.deploy.bicep'
+    modules: 'PSRule.Rules.Azure'
+    outputFormat: 'Sarif'
+    outputPath: 'psrule-results'
