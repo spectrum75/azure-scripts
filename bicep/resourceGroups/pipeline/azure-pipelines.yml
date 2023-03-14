@@ -17,5 +17,5 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      pwd 
+      cd ./bicep/resourceGroups/
       az deployment sub what-if --template-file .\deploy.bicep --parameters .\config\parameters.json -l australiaeast
